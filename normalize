@@ -1,0 +1,47 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+double custom_fmod(double x, double y) {
+    while (x >= y) x -= y;  
+    while (x < 0) x += y;   
+    return x;
+}
+double power(double a, double b) {
+    double result =1;
+    for (int i=1; i<=b; i++) {
+        result*=a;
+    }
+    return result;
+}
+
+double normalize(double x) {
+    const double PI = 3.14159265358979323846;
+    x = custom_fmod(x, 2 * PI); 
+    if (x > PI) x -= 2 * PI; 
+    if (x < -PI) x += 2 * PI; 
+    return x;
+}
+long long factorial(int n) {
+    if (n == 0 || n == 1) return 1;
+    if (n==1) {return n;}
+    return n*factorial(n-1);
+}
+
+double buildin(double x, int terms = 10) { 
+    double result= 0.0;
+    x=normalize(x);
+    for (int n= 0; n< terms; ++n) {
+        double term= power(-1,n)*power(x,2*n+1)/factorial(2*n+1);
+        result+= term;
+    }
+    
+    return result;
+}
+
+int main() {
+    double x;
+    cin >> x;
+    double result = buildin(x);
+    cout << fixed << setprecision(4) << result ;
+    return 0;
+}
