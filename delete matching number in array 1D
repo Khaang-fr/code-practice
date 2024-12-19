@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> deletematch(const vector<int>& arr, int k) {
+    vector<int> res;
+    for (int n : arr) {
+        if (n != k) {
+            res.push_back(n);
+        }
+    }
+    return res;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i=0; i<n; i++) {
+        cin >> arr[i];
+    }
+    int k;
+    cin >> k;
+    vector<int> res = deletematch(arr, k);
+    for (int n : res) {
+        cout << n << " ";
+    }
+    return 0;
+}
