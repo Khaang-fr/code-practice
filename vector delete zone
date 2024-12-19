@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> deletepk(const vector<int>& arr,int n, int p, int k) {
+    vector<int> res;
+    for (int i=0; i<n; i++) {
+        if (i<p || i>=k+p) {
+            res.push_back(arr[i]);
+        }
+    }
+    return res;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i=0; i<n; i++) {
+        cin >> arr[i];
+    }
+    int p, k;
+    cin >> p >> k;
+    vector<int> res = deletepk(arr,n, p, k);
+    for (int n : res) {
+        cout << n << " ";
+    }
+    return 0;
+}
