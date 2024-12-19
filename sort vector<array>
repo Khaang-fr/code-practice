@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr1(n);
+    for (int i=0; i<n; i++) {
+        cin >> arr1[i];
+    }
+    int m;
+    cin >> m;
+    vector<int> arr2(m);
+    for (int i=0; i<m; i++) {
+        cin >> arr2[i];
+    }
+    vector<int> res;
+    for (int i=0; i<n; i++) {
+        res.push_back(arr1[i]);
+    }
+    for (int i=0; i<m; i++) {
+        res.push_back(arr2[i]);
+    }
+    sort(res.begin(), res.end()); // sort(res.begin(), res.end(), greater<int>()) nếu muốn sort descending
+    for (int i : res) {
+        cout << i << " ";
+    }
+    return 0;
+}
