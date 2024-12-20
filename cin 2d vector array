@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int m, n;
+    cin >> m >> n;
+    vector<vector<double>> arr(m,vector<double>(n));
+    for (auto& m : arr) {
+        for (auto& j : m) {
+            cin >> j;
+        }
+    }
+    vector<vector<double>> res(n, vector<double>(m)) ;
+    for (int i=0; i<m; i++) {
+        for (int j=0; j<n; j++) {
+            res[j][i]=arr[i][j];
+        }
+    }
+    for (auto& n : res) {
+        for (auto& j : n) {
+            cout << j << " "; 
+        }
+        cout << endl;
+    }
+    return 0;
+}
