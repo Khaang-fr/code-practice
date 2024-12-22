@@ -1,0 +1,92 @@
+
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
+using namespace std;
+#define MAX 300
+
+int myStrlen(char s[], int k); //Ham tra ve chieu dai chuoi s ke tu vi tri k
+void myMemmove(char s[], int vt, int k); //Xoa k ky tu trong chuoi s, bat dau tu vi tri vt. 
+int myStrstr(char s[], char s1[]); //Tim chuoi s1 trong chuoi s, neu tim thay tra ve vi tri s1[0] trong chuoi s, khong tin thay tra ve -1
+void Chuanhoa(char s[]);
+
+int main()
+{
+	char s[MAX];
+	fgets(s,MAX,stdin);	//Nhap chuoi s	
+	Chuanhoa(s);
+	cout << s << endl;
+	return 0;
+}
+
+
+int myStrlen(char s[], int k) {
+    int length = 0;
+    while (s[k] != '\0') {
+        length++;
+        k++;
+    }
+    return length;
+}
+
+void myMemmove(char s[], int vt, int k) {
+    int len = myStrlen(s, 0);
+    for (int i = vt; i <= len - k; i++) {
+        s[i] = s[i + k];
+    }
+    s[len - k] = '\0'; 
+}
+
+int myStrstr(char s[], char s1[]) {
+    int lenS = myStrlen(s, 0);
+    int lenS1 = myStrlen(s1, 0);
+
+    for (int i = 0; i <= lenS - lenS1; i++) {
+        int j;
+        for (j = 0; j < lenS1; j++) {
+            if (s[i + j] != s1[j]) {
+                break;
+            }
+        }
+        if (j == lenS1) {
+            return i; 
+        }
+    }
+    return -1; 
+}
+
+void Chuanhoa(char s[]) {
+    int len = myStrlen(s, 0);
+
+    while (s[0] == ' ') {
+        myMemmove(s, 0, 1);
+    }
+
+    while (s[len - 1] == ' ' || s[len - 1] == '\n') {
+        s[len - 1] = '\0';
+        len--;
+    }
+
+    for (int i = 0; i < len; i++) {
+        if (s[i] == ' ' && s[i + 1] == ' ') {
+            myMemmove(s, i, 1);
+            i--; 
+            len--;
+        }
+    }
+    bool capitalizeNext = true;
+    for (int i = 0; i < len; i++) {
+        if (s[i] == ' ') {
+            capitalizeNext = true;
+        } else if (capitalizeNext) {
+            if (s[i] >= 'a' && s[i] <= 'z') {
+                s[i] -= 32;
+            }
+            capitalizeNext = false;
+        } else {
+            if (s[i] >= 'A' && s[i] <= 'Z') {
+                s[i] += 32; 
+            }
+        }
+    }
+}
