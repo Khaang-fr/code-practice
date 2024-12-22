@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+#define MAX 300
+
+int myStrcmp(char s1[], char s2[]) {
+    int i = 0;
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) {
+            return s1[i] - s2[i];
+        }
+        i++;
+    }
+    return s1[i] - s2[i];
+}
+
+int myStrlen(char s[], int k) {
+    int length = 0;
+    while (s[length + k] != '\0') {
+        length++;
+    }
+    return length;
+}
+
+void myStrcpy(char s[], int vt, char s1[], int k) {
+    int i = 0;
+    while (s1[k + i] != '\0') {
+        s[vt + i] = s1[k + i];
+        i++;
+    }
+    s[vt + i] = '\0';
+}
+
+void mySubstr(char s[], int b, int count, char ss[]) {
+    int i = 0;
+    while (i < count && s[b + i] != '\0') {
+        ss[i] = s[b + i];
+        i++;
+    }
+    ss[i] = '\0';
+}
+
+bool myStrcat(char s1[], char s2[]) {
+    int i = 0;
+    while (s1[i] != '\0') i++;
+    int j = 0;
+    while (s2[j] != '\0') {
+        s1[i] = s2[j];
+        i++;
+        j++;
+    }
+    s1[i] = '\0';
+    return true;
+}
+
+void StringReverse(char st[]) {
+    int start = 0, end = 0;
+    char temp[MAX];
+    int tempIndex = 0;
+
+    while (st[end] != '\0') {
+        while (st[end] != ' ' && st[end] != '\0') end++;
+        for (int i = end - 1; i >= start; i--) {
+            temp[tempIndex++] = st[i];
+        }
+        while (st[end] == ' ') {
+            temp[tempIndex++] = ' ';
+            end++;
+        }
+        start = end;
+    }
+
+    temp[tempIndex] = '\0';
+
+    int i = 0;
+    while (temp[i] != '\0') {
+        st[i] = temp[i];
+        i++;
+    }
+    st[i] = '\0';
+}
+
+
+int main() {
+    char s[MAX];
+    cin.getline(s, MAX);
+    if (myStrcmp(s, "") == 0)
+        cout << "Chuoi rong." << endl;
+    else {
+        StringReverse(s);
+        cout << s << endl;
+    }
+    return 0;
+}
