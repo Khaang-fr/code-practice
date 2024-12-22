@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string n;
+    cin >> n;
+    int sum = 0;
+    for (char digit : n) {
+        sum += digit - '0';
+    }
+    string best = n;
+    for (int i = 0; i < n.size(); i++) {
+        char ori = n[i];
+        for (char newd = '0'; newd <= '9'; newd++) {
+            if (newd == ori) continue;  
+            n[i] = newd;
+            int new_sum = sum - (ori - '0') + (newd - '0');
+            if (new_sum % 3 == 0) {
+                if (n > best) {
+                    best = n;
+                }
+            }
+        }
+        n[i] = ori;  
+    }
+
+    if (best == n) {
+        for (int i = n.size() - 1; i >= 0; i--) {
+            int digit = n[i] - '0';
+            for (int smaller = 1; smaller <= 3; smaller++) {
+                if (digit >= smaller) {
+                    n[i] = '0' + (digit - smaller);
+                    int new_sum = 0;
+                    for (char d : n) {
+                        new_sum += d - '0';
+                    }
+                    if (new_sum % 3 == 0) {
+                        cout << n << endl;
+                        return 0;
+                    }
+                    n[i] = '0' + digit; 
+                }
+            }
+        }
+    }
+
+    cout << best << endl;
+    return 0;
+}
