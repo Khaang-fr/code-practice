@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
+using namespace std;
+#define MAX 300
+
+void DemTieng(char s1[]);
+int myStrcmp(char s1[], char s2[]);
+int myStrlen(char s[], int k);
+void myStrcpy(char s[], int vt, char s1[], int k);
+void myMemmove(char s[], int vt, int k);
+int myStrstr(char s[], char s1[]);
+void mySubstr(char s[], int b, int count, char ss[]);
+bool myStrcat(char s1[], char s2[]);
+
+int main()
+{
+    char s[MAX];
+    fgets(s, MAX, stdin);
+
+    if (myStrcmp(s, "") == 0)
+        cout << "Chuoi rong." << endl;
+    else
+        DemTieng(s);
+
+    return 0;
+}
+
+void DemTieng(char s1[])
+{
+    char words[MAX][MAX];
+    int count[MAX] = {0};
+    int n = 0;
+
+    int len = myStrlen(s1, 0);
+    if (s1[len - 1] == '\n' || s1[len - 1] == '\r')
+        s1[len - 1] = '\0';
+
+    char *token = strtok(s1, " ");
+    while (token != NULL)
+    {
+        bool found = false;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (myStrcmp(words[i], token) == 0)
+            {
+                count[i]++;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            myStrcpy(words[n], 0, token, myStrlen(token, 0));
+            count[n++] = 1;
+        }
+
+        token = strtok(NULL, " ");
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << words[i] << ": " << count[i] << endl;
+    }
+}
+
+int myStrcmp(char s1[], char s2[])
+{
+    while (*s1 == '\n' || *s1 == '\r')
+        s1++;
+
+    while (*s1 && (*s1 == *s2))
+    {
+        s1++;
+        s2++;
+    }
+    return *(unsigned char *)s1 - *(unsigned char *)s2;
+}
+
+int myStrlen(char s[], int k)
+{
+    int len = 0;
+    while (s[k + len] != '\0')
+        len++;
+    return len;
+}
+
+void myStrcpy(char s[], int vt, char s1[], int k)
+{
+    for (int i = 0; i < k; i++)
+    {
+        s[vt + i] = s1[i];
+    }
+    s[vt + k] = '\0';
+}
+
