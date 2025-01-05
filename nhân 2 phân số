@@ -1,0 +1,53 @@
+#include <iostream> 
+using namespace std;
+struct PhanSo {
+    int tu;
+    int mau;
+};
+
+PhanSo Nhap() {
+    PhanSo x;
+    cin >> x.tu >> x.mau;
+    return x;
+}
+void Nhap(PhanSo &x) {
+    cin >> x.tu >> x.mau;
+}
+int GCD(int a, int b) {
+    while (b != 0) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+PhanSo Cong(PhanSo &a, PhanSo &b) {
+    PhanSo res;
+    res.tu= a.tu*b.mau + b.tu*a.mau;
+    res.mau= a.mau*b.mau;
+    return res;
+}
+void Xuat(PhanSo a) {
+    if (a.mau < 0) {
+        a.mau *= -1;
+        a.tu *= -1;
+    }
+    int gcd = GCD(abs(a.tu), abs(a.mau));
+    a.tu/=gcd;
+    a.mau/=gcd;
+    if (a.mau == 1) {
+        cout << a.tu; 
+    } else if (a.tu % a.mau==0) {
+        cout << a.tu/a.mau;
+    } else {
+        cout << a.tu << "/" << a.mau;
+    }
+}   
+
+int main() {
+    PhanSo a, b;
+    Nhap(a);
+    b = Nhap();
+    Xuat(Cong(a, b));
+    return 0;
+}
