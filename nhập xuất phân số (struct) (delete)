@@ -1,0 +1,78 @@
+
+#include <iomanip>
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+#define MAXN 100
+
+
+struct SinhVien {
+    char MASV[10];
+    char HoTen[100];
+    char NgaySinh[12];
+    char GioiTinh;
+    float DiemToan, DiemLy, DiemHoa, DTB;
+};
+#include <vector>
+vector<int> arr;
+
+void Nhap(char x[]) {
+    cin.getline(x, MAXN);
+}
+void Nhap(SinhVien sv[], int &n) {
+    cin >>n;
+    cin.ignore();
+    for (int i=0; i<n; i++) {
+        cin.getline(sv[i].MASV, 10);
+        cin.getline(sv[i].HoTen, 100);
+        cin.getline(sv[i].NgaySinh, 12);
+        cin >> sv[i].GioiTinh >> sv[i].DiemToan >> sv[i].DiemLy >> sv[i].DiemHoa ;
+        cin.ignore();
+        sv[i].DTB = (sv[i].DiemToan + sv[i].DiemLy + sv[i].DiemHoa) / 3;
+    }
+}
+void XoaTheoHoTen(SinhVien sv[], int n, char x[]){
+    for (int i=0; i<n; i++) {
+        if (strcmp(sv[i].HoTen, x) == 0) {
+            arr.push_back(i);
+        }
+    }
+}
+void Xuat(SinhVien x[], int n) {
+    for (int i=0; i<n; i++) {
+        int count=0;
+        for (int j=0; j< arr.size(); j++) {
+            if (i==arr[j]) {
+                count++;
+            }
+        }
+        if (count>0) {
+            continue;
+        }
+        cout << x[i].MASV << "\t"
+        << x[i].HoTen << "\t"
+        << x[i].NgaySinh << "\t"
+        << x[i].GioiTinh << "\t"
+        << setprecision(3)
+        << x[i].DiemToan << "\t"
+        << x[i].DiemLy << "\t"
+        << x[i].DiemHoa << "\t"
+        << x[i].DTB << endl;
+    }
+}
+
+int main() {
+    SinhVien A[MAXN];
+    char hoTenCanXoa[100];
+    int n;
+
+    Nhap(hoTenCanXoa);
+
+    Nhap(A, n);
+
+    XoaTheoHoTen(A, n, hoTenCanXoa);
+
+    Xuat(A, n);
+    return 0;
+}
+
