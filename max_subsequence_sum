@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <random>
+using namespace std;
+using namespace std::chrono;
+
+int max_subsequence_sum_n(const vector<int>& arr) {
+    int max_sum = 0;
+    int current_sum = 0;
+    for (int num : arr) {
+        current_sum = max(0, current_sum + num);
+        if (current_sum > max_sum) {
+            max_sum = current_sum;
+        }
+    }
+    return max_sum;
+}
+
+int max_subsequence_sum_n2(const vector<int>& arr) {
+    int max_sum = 0;
+    int n = arr.size();
+    for (int i = 0; i < n; ++i) {
+        int current_sum = 0;
+        for (int j = i; j < n; ++j) {
+            current_sum += arr[j];
+            if (current_sum > max_sum) {
+                max_sum = current_sum;
+            }
+        }
+    }
+    return max_sum;
+}
+
+int max_subsequence_sum_n3(const vector<int>& arr) {
+    int max_sum = 0;
+    int n = arr.size();
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) {
+            int current_sum = 0;
+            for (int k = i; k <= j; ++k) {
+                current_sum += arr[k];
+            }
+            if (current_sum > max_sum) {
+                max_sum = current_sum;
+            }
+        }
+    }
+    return max_sum;
+}
+
+vector<int> generate_random_array(int size, int min_val, int max_val) {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distrib(min_val, max_val);
+
+    vector<int> arr(size);
+    for (int i = 0; i < size; ++i) {
+        arr[i] = distrib(gen);
+    }
+    return arr;
+}
+
+int main() {
+    int size = 500000;
+    int min_val = -100;
+    int max_val = 100;
+
+    vector<int> arr = generate_random_array(size, min_val, max_val);
+    auto start = high_resolution_clock::now();
+    long long result = max_subsequence_sum_n3(arr);
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end - start);
+    cout << "Ket qua: " << result << ", Thoi gian chay: " << duration.count() << " milliseconds" << endl;
+    return 0;
+}
